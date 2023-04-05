@@ -1,0 +1,9 @@
+﻿@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none;
+    }
+}
+
+.filterBox {
+    max-width: 50%;
+}

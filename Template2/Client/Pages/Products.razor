@@ -1,0 +1,55 @@
+﻿@page "/Products/{Platform}"
+@inject PublicClient _public
+
+<PageTitle>Products - @Platform</PageTitle>
+
+<MudPaper Elevation="10">
+    <MudToolBar>
+        <MudText>|</MudText>
+        <MudBreadcrumbs Items="@breadcrumbs" Class="hidden-mobile"></MudBreadcrumbs>
+        <MudText Class="mr-4">|</MudText>
+        <MudSpacer/>
+
+        <MudText Align="Align.End">Price</MudText>
+        <MudIcon @onclick="() => Sort(true)" Icon="@Icons.Material.Filled.ArrowDownward" Style="@orderPriceDesc" Edge="Edge.End"/>
+        <MudIcon @onclick="() => Sort(false)" Icon="@Icons.Material.Filled.ArrowUpward" Style="@orderPriceAsc" Edge="Edge.End"/>
+
+        <MudSelect Class="mb-3 filterBox" T="string" Label="Genre" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues="filterGenre" @onchange="FilterProducts">
+            <MudSelectItem Value="@("RPG")"/>
+            <MudSelectItem Value="@("Action")"/>
+            <MudSelectItem Value="@("Puzzle")"/>
+        </MudSelect>
+
+        <MudSelect Class="mb-3 filterBox" T="string" Label="Age Rating" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues="filterAge" @onchange="FilterProducts">
+            <MudSelectItem Value="@("PEGI 7")"/>
+            <MudSelectItem Value="@("PEGI 12")"/>
+            <MudSelectItem Value="@("PEGI 18")"/>
+        </MudSelect>
+
+        <MudButton @onclick="ClearFilters"><MudText Typo="Typo.caption">Clear Filters</MudText></MudButton>
+    </MudToolBar>
+</MudPaper>
+
+<MudPaper Elevation="10" Class="mt-8">
+    <MudGrid Spacing="3" Justify="Justify.Center">
+        <Virtualize Items="products" Context="product">
+            <MudItem>
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderAvatar>
+                            <MudAvatar Color="Color.Secondary">@product.Name[0]</MudAvatar>
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1">@product.Name</MudText>
+                            <MudText Typo="Typo.caption">@product.Genre</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Add To Cart</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </Virtualize>
+    </MudGrid>
+</MudPaper>
